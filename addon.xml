@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.giga_de" name="GIGA.de" version="1.0.0" provider-name="AddonScriptorDE">
+<addon id="plugin.video.giga_de" name="GIGA.de" version="1.0.1" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
     </requires>
@@ -8,8 +8,9 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="de">GIGA.de</summary>
-        <summary lang="en">GIGA.de</summary>
+        <summary lang="de">Technik, Games und Entertainment Videos</summary>
+        <summary lang="en">Technical, Games and Entertainment Videos</summary>
+        <language>de</language>
         <description lang="de">Technik, Games und Entertainment Videos</description>
         <description lang="en">Technical, Games and Entertainment Videos</description>
     <platform>all</platform>

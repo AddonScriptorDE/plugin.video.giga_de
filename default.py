@@ -4,15 +4,14 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon
 
 pluginhandle = int(sys.argv[1])
 
-settings = xbmcaddon.Addon(id='plugin.video.mtv_de')
+settings = xbmcaddon.Addon(id='plugin.video.giga_de')
 translation = settings.getLocalizedString
 
 def index():
         addDir("Top Videos","http://www.giga.de/tv/",'listVideosTop',"")
-        addDir("All Videos","http://www.giga.de/tv/alle-videos/",'listVideos',"")
+        addDir(translation(30001),"http://www.giga.de/tv/alle-videos/",'listVideos',"")
         addDir("Giga Live","http://www.giga.de/giga-tv/archiv/",'listVideos',"")
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(50)')
 
 def listVideosTop(url):
         content = getUrl(url)
@@ -28,7 +27,6 @@ def listVideosTop(url):
             title=cleanTitle(title)
             addLink(title,url,'playVideo',thumb)
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def listVideos(url):
         content = getUrl(url)
@@ -52,7 +50,6 @@ def listVideos(url):
         if len(match)>0:
           addDir("Next Page",match[0],'listVideos',"")
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def playVideo(url):
         if url.find("http://")>=0:
