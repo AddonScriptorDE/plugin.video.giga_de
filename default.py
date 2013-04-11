@@ -48,12 +48,9 @@ def listVideos(url):
         entry = spl[i]
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
-        match1 = re.compile('" >(.+?)</a>', re.DOTALL).findall(entry)
-        match2 = re.compile('">(.+?)</a>', re.DOTALL).findall(entry)
-        if match1:
-            title = match1[0]
-        elif match2:
-            title = match2[0]
+        titleTemp = entry[entry.find("<a"):]
+        match = re.compile('>(.+?)</a>', re.DOTALL).findall(titleTemp)
+        title = match[0]
         title = cleanTitle(title)
         thumb = ""
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
@@ -77,8 +74,10 @@ def listVideos(url):
 def playVideo(url):
     content = getUrl(url)
     match = re.compile('"VIDEO_ID":"(.+?)"', re.DOTALL).findall(content)
+    matchYT0 = re.compile('data-youtube-id="(.+?)"', re.DOTALL).findall(content)
     matchYT1 = re.compile('value="http://www.youtube.com/v/(.+?)\\?', re.DOTALL).findall(content)
     matchYT2 = re.compile('href="https://www.youtube.com/watch\\?v=(.+?)"', re.DOTALL).findall(content)
+    matchYT3 = re.compile('src="http://www.youtube.com/embed/(.+?)"', re.DOTALL).findall(content)
     url = ""
     if match:
         content = getUrl("http://video.giga.de/xml/"+match[0]+".xml")
@@ -88,10 +87,14 @@ def playVideo(url):
             url = "http://video.giga.de/data/"+match1[0][1]
         elif match2:
             url = "http://video.giga.de/data/"+match2[0][1]
+    elif matchYT0:
+        url = getYoutubeUrl(matchYT0[0])
     elif matchYT1:
         url = getYoutubeUrl(matchYT1[0])
     elif matchYT2:
         url = getYoutubeUrl(matchYT2[0])
+    elif matchYT3:
+        url = getYoutubeUrl(matchYT3[0])
     if url:
         listitem = xbmcgui.ListItem(path=url)
         xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
